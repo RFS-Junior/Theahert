@@ -37,6 +37,11 @@ dependencies:
   firebase_database: ^9.0.19
   get_it: ^7.2.0
 
+  path:
+  path_provider:
+  sqflite:
+  sqlbrite: ^2.3.0
+
   dorm_annotations:
     git:
       url: http://github.com/enzo-santos/dorm.git

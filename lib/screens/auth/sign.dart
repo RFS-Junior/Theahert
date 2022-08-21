@@ -4,6 +4,7 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:theahert/models/models.dart';
+import 'package:theahert/services/sqlite.dart';
 
 class _UserFormBloc extends FormBloc<UserCredential, FirebaseAuthException> {
   late final TextFieldBloc<String> email;
@@ -101,6 +102,13 @@ class UserFormScreen extends StatelessWidget {
                           phoneNumber: bloc.phoneNumber.value,
                           userType: "client",
                         );
+
+                        await const SQLiteDatabase().create(UserTheahertData(
+                            firstName: userTheahert.firstName,
+                            lastName: userTheahert.lastName,
+                            email: userTheahert.email,
+                            phoneNumber: userTheahert.phoneNumber,
+                            userType: userTheahert.userType));
 
                         await saveUserGeevo(userTheahert);
 
