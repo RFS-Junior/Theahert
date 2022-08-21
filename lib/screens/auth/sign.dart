@@ -103,12 +103,13 @@ class UserFormScreen extends StatelessWidget {
                           userType: "client",
                         );
 
-                        await const SQLiteDatabase().create(UserTheahertData(
-                            firstName: userTheahert.firstName,
-                            lastName: userTheahert.lastName,
-                            email: userTheahert.email,
-                            phoneNumber: userTheahert.phoneNumber,
-                            userType: userTheahert.userType));
+                        await const SQLiteDatabase().createUser(
+                            UserTheahertData(
+                                firstName: userTheahert.firstName,
+                                lastName: userTheahert.lastName,
+                                email: userTheahert.email,
+                                phoneNumber: userTheahert.phoneNumber,
+                                userType: userTheahert.userType));
 
                         await saveUserGeevo(userTheahert);
 

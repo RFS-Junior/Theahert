@@ -23,10 +23,9 @@ class SQLiteDatabase {
         "CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, firstName TEXT NOT NULL, lastName TEXT NOT NULL, email TEXT NOT NULL, phoneNumber TEXT, userType TEXT NOT NULL)");
   }
 
-  Future create(UserTheahertData data) async {
+  Future createUser(UserTheahertData data) async {
     try {
       final Database db = await _getDatabase("theahert");
-
       await db.insert(
         "users",
         data.toJson(),
@@ -37,10 +36,9 @@ class SQLiteDatabase {
     }
   }
 
-  Future deleteAll() async {
+  Future deleteUsers() async {
     try {
       final Database db = await _getDatabase("theahert");
-
       await db.rawDelete("DELETE FROM users");
     } catch (ex) {
       print(ex);
@@ -48,29 +46,21 @@ class SQLiteDatabase {
     }
   }
 
-  Future<List<UserTheahert>?> getAllUsers() async {
+  Future deleteUserById(String id) async {
     try {
       final Database db = await _getDatabase("theahert");
-
-      return await db.query("users", columns: [
-        "id",
-        "lastName",
-        "lastName",
-        "email",
-        "phoneNumber",
-        "userType"
-      ]).then((value) {
-        for (var element in value) {
-          UserTheahert.fromJson(element["id"].toString(), element);
-        }
-      });
+      await db.delete(
+        "users",
+        where: "id = ?",
+        whereArgs: [id],
+      );
     } catch (ex) {
       print(ex);
-      return null;
+      return;
     }
   }
 
-  Future<List<UserTheahert>?> getUsers() async {
+  Future<List<UserTheahert>?> selectUsers() async {
     try {
       final Database db = await _getDatabase("theahert");
       final List<Map<String, dynamic>> maps = await db.query("users");

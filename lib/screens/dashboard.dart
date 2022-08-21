@@ -27,7 +27,7 @@ class ClientDashboard extends StatelessWidget {
             children: [
               const Text("Dashboard Cliente"),
               FutureBuilder<List<UserTheahert>?>(
-                  future: const SQLiteDatabase().getUsers(),
+                  future: const SQLiteDatabase().selectUsers(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const LinearProgressIndicator();
@@ -56,13 +56,14 @@ class ClientDashboard extends StatelessWidget {
               MaterialButton(
                 color: Colors.red,
                 onPressed: () async {
-                  await const SQLiteDatabase().create(const UserTheahertData(
-                      firstName: "abc",
-                      lastName: "abc",
-                      email: "abc",
-                      phoneNumber: "abc",
-                      userType: "abc"));
-                  await const SQLiteDatabase().deleteAll();
+                  await const SQLiteDatabase().createUser(
+                      const UserTheahertData(
+                          firstName: "abc",
+                          lastName: "abc",
+                          email: "abc",
+                          phoneNumber: "abc",
+                          userType: "abc"));
+                  await const SQLiteDatabase().deleteUsers();
                 },
                 child: const Text("REMOVE ALL"),
               ),
