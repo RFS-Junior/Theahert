@@ -25,7 +25,10 @@ class ClientDashboard extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const Text("Dashboard Cliente"),
+              const Text(
+                "Dashboard Cliente",
+                style: TextStyle(fontSize: 35),
+              ),
               FutureBuilder<List<UserTheahert>?>(
                   future: const SQLiteDatabase().selectUsers(),
                   builder: (context, snapshot) {
@@ -39,34 +42,32 @@ class ClientDashboard extends StatelessWidget {
                             shrinkWrap: true,
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
-                              return Text(snapshot.data![index].email);
+                              return Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Card(
+                                  child: Column(
+                                    children: [
+                                      Center(
+                                          child: Text(
+                                              "Primeiro nome: ${snapshot.data![index].firstName}")),
+                                      Center(
+                                          child: Text(
+                                              "Último nome: ${snapshot.data![index].lastName}")),
+                                      Center(
+                                          child: Text(
+                                              "Email: ${snapshot.data![index].email}")),
+                                      Center(
+                                          child: Text(
+                                              "Número de Celular: ${snapshot.data![index].phoneNumber.toString()}")),
+                                    ],
+                                  ),
+                                ),
+                              );
                             }),
                       );
                     }
                     return const Text("No data");
                   }),
-              MaterialButton(
-                color: Colors.green,
-                onPressed: () async {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const ClientDashboard()));
-                },
-                child: const Text("ATUALIZAR"),
-              ),
-              MaterialButton(
-                color: Colors.red,
-                onPressed: () async {
-                  await const SQLiteDatabase().createUser(
-                      const UserTheahertData(
-                          firstName: "abc",
-                          lastName: "abc",
-                          email: "abc",
-                          phoneNumber: "abc",
-                          userType: "abc"));
-                  await const SQLiteDatabase().deleteUsers();
-                },
-                child: const Text("REMOVE ALL"),
-              ),
             ],
           ),
         ),
